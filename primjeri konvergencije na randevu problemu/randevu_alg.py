@@ -1,6 +1,7 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
+import time
 
 """"
 RADJENO SA 2 DIMENZIJE
@@ -85,6 +86,7 @@ def consensus_protocol(x, y, r, adjacency_matrix , graph):
     
 
     r_list = [r]
+    time_start = time.time()
     while nasli_se == False:
         iter = iter + 1
 
@@ -100,8 +102,11 @@ def consensus_protocol(x, y, r, adjacency_matrix , graph):
         if iter == 100 and nasli_se == False:
             break
         
-
-
+  
+    time_end = time.time()
+    time_delta = time_end - time_start
+    print("Trajanje algortima:")
+    print(time_delta)
     print(len(r_list))
     moving_plot(x, y, r_list, graph)
 

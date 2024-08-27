@@ -1,0 +1,24 @@
+GRAF A
+Trajanje algortima:
+0.009760856628417969
+34
+
+GRAF B
+Trajanje algortima:
+0.020659685134887695
+70
+
+GRAF C
+Trajanje algortima:
+0.010788440704345703
+95
+
+GRAF D
+
+GRAF E
+Trajanje algortima:
+0.012382984161376953
+76
+
+
+
