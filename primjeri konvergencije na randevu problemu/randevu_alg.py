@@ -41,6 +41,25 @@ def update_r(r, dr, dt):
     r = r + dr * dt
     return r
 
+
+def calculate_dr_sep(a, r, control_gain=0.1, c = 0.2):
+    dr =  np.zeros_like(r)
+    
+    n = len(x)
+    for i in range(n):
+        dr_elem = [0, 0]
+        sep_element = [0, 0]
+        for j in range(n):
+            if i == j:
+                continue
+            dr_elem += a[i][j] * (r[j] - r[i])
+            norm = (r[j][0] - r[i][0])**2 + (r[j][1] - r[i][1])**2
+            sep_element += (r[j] - r[i]) / norm
+            
+        dr[i] = dr_elem * control_gain - sep_element * c
+        
+    return dr
+
 def calculate_dr(a, r, control_gain=0.1):
     dr =  np.zeros_like(r)
     
@@ -73,7 +92,7 @@ def uvijet_prekidanja(a, r, tresh = 0.1):
     return True
 
 
-def consensus_protocol(x, y, r, adjacency_matrix , graph):
+def consensus_protocol(x, y, r, adjacency_matrix , graph, separation):
     n = len(x)
     
 
@@ -89,8 +108,10 @@ def consensus_protocol(x, y, r, adjacency_matrix , graph):
     time_start = time.time()
     while nasli_se == False:
         iter = iter + 1
-
-        dr = calculate_dr(adjacency_matrix, r, control_gain)
+        if separation == True:
+            dr = calculate_dr_sep(adjacency_matrix, r, control_gain)
+        else:
+            dr = calculate_dr(adjacency_matrix, r, control_gain)
         r = update_r(r, dr, dt)
         
         r_list.append(r)
@@ -99,7 +120,7 @@ def consensus_protocol(x, y, r, adjacency_matrix , graph):
         nasli_se = uvijet_prekidanja(adjacency_matrix, r)
         #dodano jer neke koreografije ne konvergiraju
 
-        if iter == 100 and nasli_se == False:
+        if iter == 60 and nasli_se == False:
             break
         
   
@@ -113,13 +134,19 @@ def consensus_protocol(x, y, r, adjacency_matrix , graph):
 
 def choose_graph():
     graphs = {"a", "b", "c", "d", "e", "f"}
+    separations = {"0", "1"}
 
     print("IZABERI GRAF a, b, c, d, e ili f iz primjera")
     while True:
         chosen_graph = input("Graf: ").strip().lower() 
         if chosen_graph in graphs:
-            
-            return chosen_graph
+            print("IZABERI separaciju (1) ili ne (0)")
+            while True:
+                chosen_separation = input("Separacija: ").strip().lower() 
+                if chosen_separation in separations:
+                    return chosen_graph, chosen_separation
+                else:
+                    print("Krivi format upisa :(, probaj opet")
         
         else:
             print("Krivi format upisa :(, probaj opet")
@@ -179,13 +206,16 @@ if __name__ == "__main__":
 
 
     
-    izabrani_graf = choose_graph()
+    izabrani_graf, separation_txt = choose_graph()
 
     graph = grafovi[izabrani_graf][0]
     adjacency_matrix = grafovi[izabrani_graf][1]
+
+    separation = True if separation_txt == "1" else False 
 
 
     print(("MATRICA SUSJEDSTVA ZA {}:\n").format(graph))
     print(adjacency_matrix)
     print("\n-----------------------")
-    consensus_protocol(x, y, r, adjacency_matrix, graph)
+    print("Separacija {}".format(separation))
+    consensus_protocol(x, y, r, adjacency_matrix, graph, separation)

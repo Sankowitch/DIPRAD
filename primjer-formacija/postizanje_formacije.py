@@ -6,6 +6,8 @@ import time
 Jednostavan primjer za postizanje
 jedne formacije za 3 agenta
 za 2.2. poglavlje
+#za poglavlja gdje se pokazuju samo fomacije control_gain = 0.5
+#za poglavlja gdje se pokazuje izbjegavanje sudara control gain= 0.1
 """
 
 
@@ -67,7 +69,7 @@ def calculate_dx(a, x, e,  control_gain=0.1):
 
 #calculate dx uz nesudaranje
 #dodano da se prije ne trose resursi za racunanje separacije 
-def calculate_dx_sep(a, x, e,  control_gain=0.1, separation = 0.2):
+def calculate_dx_sep(a, x, e,  control_gain=0.1, c = 0.2):
     dx =  np.zeros_like(x)
     
     n = len(x)
@@ -81,7 +83,7 @@ def calculate_dx_sep(a, x, e,  control_gain=0.1, separation = 0.2):
             norm = (x[j][0] - x[i][0])**2 + (x[j][1] - x[i][1])**2
             sep_element += (x[j] - x[i]) / norm
             
-        dx[i] = dx_elem * control_gain - sep_element * separation
+        dx[i] = dx_elem * control_gain - sep_element * c
         
     return dx
 
@@ -94,7 +96,7 @@ def consensus_protocol(x, y, x_arr, e_arr, adjacency_matrix , graph, separation 
 
     iter = 0
     dt = 0.1
-    control_gain = 0.5
+    control_gain = 0.2
 
     
 
