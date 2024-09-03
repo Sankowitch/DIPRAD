@@ -1,0 +1,135 @@
+map_name: 'empty_10x10'     # Base name of the map
+num_of_robots: 3   # Number of robots to spawn
+rate: 10
+dt: 0.1
+distribution: 'circle'        # One of the options from 'distribution_list'
+choreography: ['trokut']       #biraj is choreograohies, mozes ih navesti vise
+alternation: False        #u slucaju vise navedenih koreografija u  if true koreografije se izmjenjuju u krug, if false zadnji oblik je onaj koji ostaje
+no_crashing: True   #False - ima sudara, tj. dozovljeni su | True - sudari nisu dozvoljeni          
+separation: 0.5  #udaljenost koju agenti odrzavaju da se ne sudare
+
+
+#vektori tj.oblici kretanja se biraju samo ako se radi o programu 
+#koji ukljucuje pinning control tj jednog agenta lidera
+#koji se kreće u smjeru zadanih vektora
+#to je move_robots_3.py
+#ako se stavi None nece biti ukljucen pinning control 
+#i program ce se ponasati kao minjenjanje_formacije.py
+formation_movement: 'square1'
+
+distribution_list:
+  circle:                   # If selected, this option will spawn 'num_of_robots'
+    center_x: 0             # robots evenly distributed in a circle centered in
+    center_y: 0             # 'center_x' and 'center_y' with radius of 'radius'.
+    radius: 1
+
+  line:
+    center_x: 0             # If selected, this option will spawn 'num_of_robots'
+    center_y: 0             # robots evenly distributed in a straight line
+    separation: 1           # centered in 'center_x' and 'center_y' with 
+    direction: 'vertical'   # 'separation' meters between them. You can choose
+                            # between 'vertical' or 'horizontal' direction.
+
+choreographies:        #oblici 
+  #2 AGENTA
+  #dokaz da se zamjene samo ako je pocetna pozicija vertical
+  figura1_1:
+    x: [-1., 1.]
+    y: [ 2., 2.]
+  figura1_2:
+    x: [ 1.,-1.]
+    y: [ 2., 2.] 
+  
+  #3 AGENTA
+  trokut:   #mali, jednakostranicni
+    x: [-1.,0., 1.]
+    y: [-1.,1.,-1.]
+  trokut_2:   #mali, jednakostranicni
+    x: [ 1.,-1., 0.]
+    y: [-1.,-1., 1.]
+  linija:
+    x: [-2., 0., 2.]
+    y: [ 2., 0.,-2.]
+  trokut_3:
+    x: [-4.0, -2.0, -0.5]
+    y: [1.0,  4.0, -4.0]
+  #za testiranje sudaranja, zamjena mjesta između 3 agenta
+  linija_2:
+    x: [-1., 0., 1.]
+    y: [ 1., 1., 1.]
+  linija_3:
+    x: [ 1.,-1., 0.]
+    y: [ 1., 1., 1.]
+  figura2_1:
+    x: [-1., 1., 0.]
+    y: [ 1., 1., 0.]
+  figura2_2:
+    x: [ 0.,-1. ,1.]
+    y: [ 0., 1., 1.]
+
+  #4 AGENTA
+  kvadrat:
+    x: [ 1.,-1. ,0., 0.]
+    y: [ 0., 0.,-1., 1.]
+
+  #8 AGENATA
+  slovo_F:
+    #    1   2   3   4   5   6   7   8
+    x: [-1., 0., 1., 1.,-1.,-1., 0.,-1.]
+    y: [ 2., 2., 2., 1.,-1., 0., 1., 1.]
+  slovo_E:
+    #    1   2   3   4   5   6   7   8
+    x: [-1., 0., 1., 1., 0.,-1., 0.,-1.]
+    y: [ 2., 2., 2., 0., 0., 0., 1., 1.]
+  slovo_R:
+    #    1   2   3   4   5   6   7   8
+    x: [-1., 0.,0.5, 1.,0.5,-1., 0.,-1.]
+    y: [ 2., 2.,1.5, 0.,0.5, 0., 1., 1.]
+
+
+formations:
+  None:
+    #nema koreografije u formaciji
+  circular:  #ide u krug
+    radius: 0.1
+    num_points: 10
+
+  square1:
+    index: 0.2
+    vectors: [[-1., 0.], [0., 1.], [1., 0.], [0., -1.]]
+
+  square2:
+    index: 0.2
+    vectors: [[0., 1.], [-1., 0.], [0., -1.], [-1., 0.]]
+
+
+
+
+#DODATNI KOMENTARI 
+#linija trokut i obrnuto (ne treba im separacijska var)
+
+#ZA PRVI PROGRAM
+#2 agenta zamjena mjesta
+#ako je pocetni oblik line
+#-sep: 0: zabiju se
+#za rate 10, sep 0.5
+# za rate 20, seb 0.25
+
+#ako je pocetni oblik circle
+
+
+#koreografija F - E - R
+#ako je pocetni oblik line -> separation: 2.5
+#ako je pocetnii oblik circle -> separation: 0.1
+
+#koreografija linija - trokut
+#ako je pocetni oblik line -> 0.05
+#ako je pocetni oblik circle -> 0.05
+
+#koreografija trokut - linija
+#ako je pocetni oblik line -> 0.05
+#ako je pocetni oblik circle -> 0.05
+
+#zamijena mjesta
+#ako je pocetni oblik line -> 0.5
+#ako je pocetni oblik circle -> neće da se zamjene :(

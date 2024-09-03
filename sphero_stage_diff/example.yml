@@ -1,0 +1,41 @@
+# ./example.yml
+
+name: example
+root: ~/
+
+# Optional tmux socket
+# socket_name: foo
+
+# Note that the pre and post options have been deprecated and will be replaced by
+# project hooks.
+
+# Project hooks
+# Runs on project start, always
+# on_project_start: command
+# Run on project start, the first time
+# on_project_first_start: command
+# Run on project start, after the first time
+# on_project_restart: command
+# Run on project exit ( detaching from tmux session )
+# on_project_exit: command
+# Run on project stop
+# on_project_stop: command
+
+
+windows:
+  - window1:
+      layout: tiled
+      # Synchronize all panes of this window, can be enabled before or after the pane commands run.
+      # 'before' represents legacy functionality and will be deprecated in a future release, in favour of 'after'
+      # synchronize: after
+      panes:
+        - roscore
+        - waitForRos; rosrun sphero_stage_diff start.py
+        #MJENJANJE OBLIKA 
+        #- waitForRos; rosrun sphero_stage_diff mijenjanje_formacija.py
+        #LET U FORMACIJI, ima i istu funkcijonaalnost mijenjaja oblika kao mijenjanje_formacija_py
+        - waitForRos; rosrun sphero_stage_diff pomicanje_formacija.py
+        #RANDEVU 
+        #- waitForRos; rosrun sphero_stage_diff randevu_alg.py
+       
+        
