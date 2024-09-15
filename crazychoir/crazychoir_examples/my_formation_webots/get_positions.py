@@ -1,7 +1,7 @@
 import rclpy
 from rclpy.node import Node
-from std_msgs.msg import Float64MultiArray  # Use Float64MultiArray for better precision
-from geometry_msgs.msg import PointStamped  # Assuming your GPS data comes in as PointStamped
+from std_msgs.msg import Float64MultiArray  
+from geometry_msgs.msg import PointStamped  
 import numpy as np
 
 class GetPositions(Node):
