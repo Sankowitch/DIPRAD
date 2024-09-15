@@ -1,0 +1,26 @@
+UPUTE
+
+---------------------------------------------------------------------------------------------------
+Za pokretanje crazychoir koda:
+...................................................................................................
+postaviti my_formation_webots.launch.py file u launch mapu
+postaviti my_formation_webots folder u crazychoir_examples folder
+postaviti consensus_guidance.py file u guidance folder
+
+updateati setup.py file 
+->zamjeniti ga sa danim setup.py fileom
+->ili dodati liniju danu liniju u scripts
+-> <'my_formation_webots': ['controller','guidance','gui','trajectory', 'get_positions'],>
+
+updateati __init__.py u guidance folderu sa
+-> <from .consensus_guidance import ConsensusGuidance>
+
+POKRETANJE SIMULACIJE NAREDBOM
+ros2 launch crazychoir_examples my_formation_webots.launch.py
+
+napomena:
+->buildati kod ako nije
+colcon build --symlink-install
+->ako nije prije pokretanja sourcati naredbom
+source install/setup.bash
+---------------------------------------------------------------------------------------------------
